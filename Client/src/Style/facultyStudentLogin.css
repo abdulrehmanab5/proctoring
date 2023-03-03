@@ -1,0 +1,13 @@
+
+
+#trail {
+    background: url('./Images/login.avif') 
+    center/cover no-repeat fixed ;
+    
+}
+#admin {
+    background: url('./Images/admin.png') ;
+    /* center/cover no-repeat fixed ; */
+    /* width: 1300px; */
+    
+}
