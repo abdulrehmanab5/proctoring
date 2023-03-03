@@ -151,7 +151,7 @@ const FacultyStudentLoginPags = () => {
                                             <div className="invalid-feedback">{errorsHelper.registrationNumber}</div>
                                         )}
                                     </div>
-                                    {/* <div className="form-group">
+                                    <div className="form-group">
                                         <label htmlFor="passwordId">Password</label>
                                         <input onChange={(e) => setStudentPassword(e.target.value)} value={studentPassword} className={classnames("form-control", {
                                             'is-invalid': errorsHelper.password
@@ -160,7 +160,7 @@ const FacultyStudentLoginPags = () => {
                                         {errorsHelper.password && (
                                             <div className="invalid-feedback">{errorsHelper.password}</div>
                                         )}
-                                    </div> */}
+                                    </div>
                                     <div class="row justify-content-center">
                                         <div class="col-md-1">
                                             {
