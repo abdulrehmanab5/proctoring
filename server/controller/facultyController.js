@@ -6,7 +6,7 @@ const Subject = require('../models/subject')
 const Faculty = require('../models/faculty')
 const Attendence = require('../models/attendence')
 const Mark = require('../models/marks')
-const Paper = require('../models/paper')
+const Paper = require('../models/papers')
 
 const keys = require('../config/key')
 
@@ -189,8 +189,7 @@ module.exports = {
         }
         
     },
-
-    uploadPaper: async (req, res, next) => {
+    uploadPapers: async (req, res, next) => {
         try {
             const { errors, isValid } = validateFacultyUploadPaper(req.body);
 
@@ -198,16 +197,16 @@ module.exports = {
             if (!isValid) {
                 return res.status(400).json(errors);
             }
-            const { subjectCode, exam, totalMarks, marks, department, year,
+            const { subjectCode, exam, totalMarks, marks,paper, department, year,
                 section } = req.body
             const subject = await Subject.findOne({ subjectCode })
             const isAlready = await Mark.find({ exam, department, section, subjectCode:subject._id })
             if (isAlready.length !== 0) {
-                errors.exam = "You have already uploaded paper of exam"
+                errors.exam = "You have already uploaded exam"
                 return res.status(400).json(errors);
             }
             for (var i = 0; i < marks.length; i++) {
-                const newMarks = await new Mark({
+                const newPaper = await new Paper({
                     student: marks[i]._id,
                     subject: subject._id,
                     exam,
@@ -217,15 +216,16 @@ module.exports = {
                     marks: marks[i].value,
                     totalMarks
                 })
-                await newMarks.save()
+                await newPaper.save()
             }
-            res.status(200).json({message:"Paper uploaded successfully"})
+            res.status(200).json({message:"Paper upload successfully"})
         }
         catch (err) {
-            console.log("Error in uploading Paper",err.message)
+            console.log("Error in uploading paper",err.message)
         }
         
     },
+ 
 
     getAllSubjects: async (req, res, next) => {
         try {

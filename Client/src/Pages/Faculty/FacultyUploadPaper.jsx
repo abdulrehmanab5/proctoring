@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom'
 
 
 
-const FacultyUploadPaper = () => {
+const FacultyUploadPapers = () => {
     const store = useSelector((store) => store)
     const history = useHistory()
     const dispatch = useDispatch() 
@@ -130,8 +130,8 @@ const FacultyUploadPaper = () => {
                                     <option value="B">B</option>
                                     <option value="C">C</option>
                                     <option value="D">D</option>
-                                    <option value="E">E</option>
-                                    <option value="F">F</option>
+                                    {/* <option value="E">E</option>
+                                    <option value="F">F</option> */}
                                 </select>
                                 {error.section && (<div classNameName="invalid-feedback">{error.section}</div>)}
                             </div>
@@ -162,22 +162,22 @@ const FacultyUploadPaper = () => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="examId">Exam</label>
-                                <select onChange={(e) => setExam(e.target.value)} value={exam} className={classnames("form-control",
+                                <input  onChange={(e) => setExam(e.target.value)} value={exam} className={classnames("form-control",
                                     {
                                         'is-invalid': errorHelper.exam
 
                                     })} id="examId">
-                                    <option>Select</option>
+                                    {/* <option>Select</option>
                                     <option value="CycleTest1">Cycle Test 1</option>
                                     <option value="CycleTest2">Cylce Test 2</option>
-                                    <option value="Semester">Semester</option>
-                                </select>
+                                    <option value="Semester">Semester</option> */}
+                                </input>
                                 {errorHelper.exam && (<div classNameName="invalid-feedback">{errorHelper.exam}</div>)}
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="marksId">Upload Paper</label>
-                                <input type="string" className={classnames("form-control",
+                                <label htmlFor="marksId">Total Marks</label>
+                                <input type="number" className={classnames("form-control",
                                     {
                                         'is-invalid': errorHelper.totalMarks
 
@@ -191,7 +191,7 @@ const FacultyUploadPaper = () => {
                                     <tr>
                                         <th scope="col">Registration Number</th>
                                         <th scope="col">Student Name</th>
-                                        <th scope="col">Paper</th>
+                                        {/* <th scope="col">Marks</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -200,9 +200,9 @@ const FacultyUploadPaper = () => {
                                             <tr key={index}>
                                                 <td>{obj.registrationNumber}</td>
                                                 <td>{obj.name}</td>
-                                                <td><div className="form-check">
-                                                    <input className="form-control" required type="text" value={obj.marks} onChange={(e) => handleInputChange(e.target.value, obj._id)} id="defaultCheck1" />
-                                                </div></td>
+                                                {/* <td><div className="form-check">
+                                                    <input className="form-control" required type="number" value={obj.marks} onChange={(e) => handleInputChange(e.target.value, obj._id)} id="defaultCheck1" />
+                                                </div></td> */}
                                             </tr>
                                         )
                                     }
@@ -219,4 +219,4 @@ const FacultyUploadPaper = () => {
     )
 }
 
-export default FacultyUploadPaper
+export default FacultyUploadPapers

@@ -3,7 +3,6 @@ const isEmpty = require('./is-empty');
 
 
 const validateFacultyUploadPaper = (data) => {
-    console.log(data)
     let errors = {}
     data.subjectCode = !isEmpty(data.subjectCode) ? data.subjectCode : '';
     data.exam = !isEmpty(data.exam) ? data.exam : '';
@@ -17,7 +16,7 @@ const validateFacultyUploadPaper = (data) => {
         errors.exam = 'Exam field is required';
     }
     if (Validator.isEmpty(data.totalMarks)) {
-        errors.totalMarks = 'paper is required';
+        errors.totalMarks = 'paper required';
     }
 
     return {

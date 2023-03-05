@@ -16,7 +16,7 @@ const markSchema = new Schema({
     },
     marks: {
         type: Number,
-        default: 0
+        default: 60
     },
     totalMarks: {
         type: Number,

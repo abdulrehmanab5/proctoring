@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { default: isURL } = require('validator/lib/isurl')
 const { url } = require('../utils/cloudinary')
 
 const { Schema } = mongoose
@@ -16,14 +17,14 @@ const paperSchema = new Schema({
         type: String,
         required:true
     },
-    marks: {
-        type: String,
+    // marks: {
+    //     type: Number,
         
-    },
-    totalMarks: {
-        type: String,
+    // },
+    // uploadpaper: {
+    //     type: Number,
      
-    },
+    // },
     department: {
         type:String
     },
@@ -35,4 +36,4 @@ const paperSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('paper', paperSchema)
+module.exports = mongoose.model('papers', paperSchema)

@@ -213,7 +213,7 @@ export const uploadPaper = (subjectCode, exam, totalMarks, marks,
         try {
             await axios({
                 method: 'Post',
-                url: url + "/api/faculty/uploadPaper",
+                url: url + "/api/faculty/uploadPapers",
                 data: {
                     subjectCode, exam, totalMarks, marks, department, year, section,
                     }
@@ -233,7 +233,6 @@ export const uploadPaper = (subjectCode, exam, totalMarks, marks,
         }
     }
 }
-
 export const setFacultyUser = data => {
     return {
         type: SET_FACULTY,
