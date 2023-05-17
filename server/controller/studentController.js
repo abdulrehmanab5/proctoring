@@ -7,6 +7,7 @@ const Subject = require('../models/subject')
 const Attendence = require('../models/attendence')
 const Message = require('../models/message')
 const Mark = require("../models/marks")
+const Paper = require("../models/papers")
 
 //File Handler
 const bufferConversion = require('../utils/bufferConversion')
@@ -17,6 +18,7 @@ const validateStudentUpdatePassword = require('../validation/studentUpdatePasswo
 const validateForgotPassword = require('../validation/forgotPassword')
 const validateOTP = require('../validation/otpValidation')
 const { markAttendence } = require("./facultyController")
+const papers = require("../models/papers")
 
 module.exports = {
     studentLogin: async (req, res, next) => {
@@ -212,125 +214,10 @@ module.exports = {
             return res.status(200)
         }
     },
-    postPrivateChat: async (req, res, next) => {
-        try {
-            const { senderName, senderId, roomId,
-                receiverRegistrationNumber,senderRegistrationNumber,message } = req.body
-
-            const receiverStudent = await Student.findOne({ registrationNumber: receiverRegistrationNumber })
-            const newMessage = await new Message({
-                senderName,
-                senderId,
-                roomId,
-                message,
-                senderRegistrationNumber,
-                receiverRegistrationNumber,
-                receiverName: receiverStudent.name,
-                receiverId: receiverStudent._id,
-                createdAt: new Date()
-            })
-            await newMessage.save()
-        }
-        catch (err) {
-            console.log("Error in post private chat", err.message)
-        }
-    },
-    getPrivateChat: async (req, res, next) => {
-        try {
-            const { roomId } = req.params
-            const swap = (input, value_1, value_2) => {
-                let temp = input[value_1];
-                input[value_1] = input[value_2];
-                input[value_2] = temp;
-            }
-            const allMessage = await Message.find({ roomId })
-            let tempArr = roomId.split(".")
-            swap(tempArr, 0, 1)
-            let secondRomId = tempArr[0] + '.' + tempArr[1]
-            const allMessage2 = await Message.find({ roomId: secondRomId })
-            var conversation = allMessage.concat(allMessage2);
-            conversation.sort();
-            res.status(200).json({ result: conversation })
-        }
-        catch (err) {
-            console.log("errr in getting private chat server side", err.message)
-
-        }
-    },
-    differentChats: async (req, res, next) => {
-        try {
-            const { receiverName } = req.params
-            const newChatsTemp = await Message.find({ senderName: receiverName })
-            // if (newChatsTemp.length === 0) {
-            //    return res.status(404).json({ result: "No any new Chat" })
-            // }
-            var filteredObjTemp = newChatsTemp.map(obj => {
-                let filteredObjTemp = {
-                    senderName: obj.senderName,
-                    receiverName: obj.receiverName,
-                    senderRegistrationNumber: obj.senderRegistrationNumber,
-                    receiverRegistrationNumber: obj.receiverRegistrationNumber,
-                    receiverId: obj.receiverId
-                }
-                return filteredObjTemp
-            })
-            let filteredListTemp = [...new Set(filteredObjTemp.map(JSON.stringify))].map(JSON.parse)
-
-            // const { receiverName } = req.params
-            const newChats = await Message.find({ receiverName })
-            // if (newChats.length === 0) {
-            //    return res.status(404).json({ result: "No any new Chat" })
-            // }
-            var filteredObj = newChats.map(obj => {
-                let filteredObj = {
-                    senderName: obj.senderName,
-                    receiverName: obj.receiverName,
-                    senderRegistrationNumber: obj.senderRegistrationNumber,
-                    receiverRegistrationNumber: obj.receiverRegistrationNumber,
-                    receiverId: obj.receiverId
-                }
-                return filteredObj
-            })
-            let filteredListPro = [...new Set(filteredObj.map(JSON.stringify))].map(JSON.parse)
-            for (var i = 0; i < filteredListPro.length; i++) {
-                for (var j = 0; j < filteredListTemp.length; j++) {
-                    if (filteredListPro[i].senderName === filteredListTemp[j].receiverName) {
-                        filteredListPro.splice(i, 1)
-
-                    }
-                }
-            }
-            res.status(200).json({ result: filteredListPro })
-        }
-        catch (err) {
-            console.log("Error in getting different chats", err.message)
-        }
-    },
-    previousChats: async (req, res, next) => {
-        try {
-            const { senderName } = req.params
-            const newChats = await Message.find({ senderName })
-            // if (newChats.length === 0) {
-            //     res.status(404).json({ result: "No any new Chat" })
-            // }
-            var filteredObj = newChats.map(obj => {
-                let filteredObj = {
-                    senderName: obj.senderName,
-                    receiverName: obj.receiverName,
-                    senderRegistrationNumber: obj.senderRegistrationNumber,
-                    receiverRegistrationNumber: obj.receiverRegistrationNumber,
-                    receiverId: obj.receiverId
-                }
-                return filteredObj
-            })
-            var filteredList = [...new Set(filteredObj.map(JSON.stringify))].map(JSON.parse)
-            console.log("filterdList",filteredList)
-            res.status(200).json({ result: filteredList })
-        }
-        catch (err) {
-            console.log("Error in getting previous chats", err.message)
-        }
-    },
+    
+   
+    
+    
     updateProfile: async (req, res, next) => {
         try {
             const {email, gender, studentMobileNumber, fatherName,
@@ -403,5 +290,105 @@ module.exports = {
         catch (err) {
             return res.status(400).json({ "Error in getting marks": err.message })
         }
+    },
+    
+    getPapers: async (req, res, next) => {
+        try {
+            console.log("req.user",req.user)
+            const {department, year, id} = req.user
+            const getPapers = await Paper.find({ department }).populate('subject')
+            console.log("getPapers")
+            console.log("getPapers",getPapers)
+          
+            const CycleTest1 = getPapers.filter((obj) => {
+                return obj;
+            })
+            // const CycleTest2 = getPapers.filter((obj) => {
+            //     return obj.exam === "CycleTest2"
+            // })
+            // const Semester = getPapers.filter((obj) => {
+            //     return obj.exam === "Semester"
+            // })
+            res.status(200).json({
+                result: {
+                    CycleTest1,
+                    // CycleTest2,
+                    // Semester
+                    
+            }
+        })
+        }
+        catch (err) {
+            return res.status(400).json({ "Error in getting Papers": err.message })
+        }
+    },
+
+
+    getModel: async (req, res, next) => {
+        let feedbackData;
+  const { ID, Category, Feedback } = req.body;
+  try {
+    if (!ID || !Category || !Feedback) {
+      console.log("Missing Feedback Data");
+      res.status(400).json({ error: "Please fill the fields properly" });
+    } else {
+     
+
+      // Send data to the AI server
+      const aiServerURL = 'http://localhost:5000/modelapi'; // Replace with your AI server URL
+      const response = await axios.post(aiServerURL, {
+        feedback: Feedback,
+      });
+
+      if (response.status === 200) {
+        const Review = response.data;
+        console.log(Review);
+        console.log(Review);
+        feedbackData = new FeedbackData({ ID, Category, Feedback, Review });
+        feedbackData.save();
+        res.status(201).json({ message: "Your Feedback Successfully Posted" });
+      } else {
+        console.log("Error communicating with the AI server");
+        res.status(500).json({ error: "Error communicating with the AI server" });
+      }
     }
+  } catch (err) {
+    console.log("err");
+    res.status(500).json({ error: "Internal server error" });
+  }
+
+    },
+
+    // getPapers: async (req, res, next) => {
+
+    //     try {
+    //         console.log("req.user",req.user)
+    //         const {department, year, id, exam} = req.user
+    //         const getPapers = await Paper.find({ department, exam, student: id }).populate('subject')
+    //         console.log("getPapers",getPapers)
+          
+    //         const CycleTestp = getPapers.filter((obj) => {
+    //             return obj.exam === "CycleTestp"
+    //         })
+    //         const CycleTest2 = getPapers.filter((obj) => {
+    //             return obj.exam === "CycleTest2"
+    //         })
+    //         const Semester = getPapers.filter((obj) => {
+    //             return obj.exam === "Semester" 
+    //         })
+    //         res.status(200).json({
+    //             result: {
+    //                 CycleTestp,
+    //                 CycleTest2,
+    //                 Semester
+                    
+    //         }})
+    //     }
+    //     catch (err) {
+    //         return res.status(400).json({ "Error in getting Papers": err.message })
+    //     }
+    // }
+
+
+    
 }

@@ -8,12 +8,10 @@ const initialState = {
     student: {},
     alongsideStudent: {},
     flag: false,
-    chatHistory: [],
+  
     regNumStudent: {},
-    privateChat: [],
-    privateChat2: [],
-    newerChats: [],
-    previousChats: [],
+  
+ 
     allSubjects: [],
     attendence: [], 
     allMarks: {}
@@ -28,51 +26,21 @@ const studentReducer = (state = initialState, action) => {
                 isAuthenticated: !isEmpty(action.payload),
                 student: action.payload
             }
-        case "CHAT_HELPER":
-            return {
-                ...state,
-                alongsideStudent: action.payload
-            }
+       
         case SET_FLAG:
             return {
                 ...state,
                 flag: true
             }
-        case "SET_CHAT":
-            return {
-                ...state, 
-                chatHistory : [state.chatHistory, action.payload]
-            }
+      
         case "GET_STUDENT_BY_REG_NUM": {
             return {
                 ...state,
                 regNumStudent: action.payload
             }
         }
-        case "GET_PRIVATE_CONVERSATION": {
-            return {
-                ...state,
-                privateChat: action.payload
-            }
-        }
-        case "GET_PRIVATE_CONVERSATION2": {
-            return {
-                ...state,
-                privateChat2: action.payload
-            }
-        }
-        case "GET_NEWER_CHATS": {
-            return {
-                ...state,
-                newerChats: action.payload
-            }
-        }
-        case "GET_PREVIOUS_CHATS": {
-            return {
-                ...state,
-                previousChats: action.payload
-            }
-        }
+      
+      
         case "GET_ALL_SUBJECTS": 
             return {
                 ...state,

@@ -5,8 +5,7 @@ const upload = require('../utils/multer')
 
 const { checkAttendence, getAllStudents, getStudentByName, studentLogin,
     updatePassword, forgotPassword, getStudentByRegName,
-    postOTP, postPrivateChat, getPrivateChat, differentChats,
-    previousChats, updateProfile, getAllSubjects, getMarks } = require('../controller/studentController')
+    postOTP,  updateProfile, getAllSubjects, getMarks , getPapers} = require('../controller/studentController')
 
 router.post('/login', studentLogin)
 
@@ -21,16 +20,11 @@ router.post('/updateProfile', passport.authenticate('jwt', { session: false }),
 //UPLOAD PASSWORD
 router.post('/updatePassword', passport.authenticate('jwt', { session: false }), updatePassword)    
 
-//CHAT RELATED ROUTES    
-router.get('/chat/:roomId', passport.authenticate('jwt', { session: false }), getPrivateChat)
 
-router.post('/chat/:roomId', passport.authenticate('jwt', { session: false }), postPrivateChat)
- 
-router.get('/chat/newerChats/:receiverName', passport.authenticate('jwt', { session: false }), differentChats)
-    
-router.get('/chat/previousChats/:senderName', passport.authenticate('jwt', { session: false }), previousChats)
     
 router.get('/getMarks', passport.authenticate('jwt', { session: false }),getMarks)
+
+router.get('/getPapers', passport.authenticate('jwt', { session: false }),getPapers)
 
 router.get('/getAllSubjects', passport.authenticate('jwt', { session: false }), getAllSubjects)
 

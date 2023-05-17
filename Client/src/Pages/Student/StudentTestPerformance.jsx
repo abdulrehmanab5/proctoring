@@ -21,7 +21,7 @@ const StudentTestPerformance = () => {
             {store.student.isAuthenticated ? <>
                 <HomeHelper />
 
-                <div className="container" style={{marginTop:"50px"}}>
+                <div className="container" style={{marginTop:"70px"}}>
 
                     {store.student.allMarks.CycleTest1 &&
                         <div className="row mt-3">

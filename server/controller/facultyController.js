@@ -170,7 +170,7 @@ module.exports = {
                 return res.status(400).json(errors);
             }
             for (var i = 0; i < marks.length; i++) {
-                const newPaper = await new Paper({
+                const newMark = await new Mark({
                     student: marks[i]._id,
                     subject: subject._id,
                     exam,
@@ -180,7 +180,7 @@ module.exports = {
                     marks: marks[i].value,
                     totalMarks
                 })
-                await newPaper.save()
+                await newMark.save()
             }
             res.status(200).json({message:"Marks uploaded successfully"})
         }
@@ -200,20 +200,20 @@ module.exports = {
             const { subjectCode, exam, totalMarks, marks,paper, department, year,
                 section } = req.body
             const subject = await Subject.findOne({ subjectCode })
-            const isAlready = await Mark.find({ exam, department, section, subjectCode:subject._id })
+            const isAlready = await Paper.find({ exam, department, section, subjectCode:subject._id })
             if (isAlready.length !== 0) {
                 errors.exam = "You have already uploaded exam"
                 return res.status(400).json(errors);
             }
-            for (var i = 0; i < marks.length; i++) {
+            for (var i = 0; i <1; i++) {
                 const newPaper = await new Paper({
-                    student: marks[i]._id,
+                    // student: marks[i]._id,
                     subject: subject._id,
                     exam,
                     department,
                     section,
                    
-                    marks: marks[i].value,
+                    // marks: marks[i].value,
                     totalMarks
                 })
                 await newPaper.save()

@@ -19,12 +19,7 @@ const setStudent = (data) => {
     }
 }
 
-const chatHelp = (data) => {
-    return {
-        type: "CHAT_HELPER",
-        payload: data
-    }
-}
+
 
 const getStudentByRegNameHelper = (data) => {
     return {
@@ -34,33 +29,10 @@ const getStudentByRegNameHelper = (data) => {
 }
 
 
-const privateConversation = (data) => {
-    return {
-        type: "GET_PRIVATE_CONVERSATION",
-        payload: data
-    }
-}
 
-const privateConversation2 = (data) => {
-    return {
-        type: "GET_PRIVATE_CONVERSATION2",
-        payload: data
-    }
-}
 
-const newerChatsHelper = (data) => {
-    return {
-        type: "GET_NEWER_CHATS",
-        payload: data
-    }
-}
 
-const previousChatsHelper = (data) => {
-    return {
-        type: "GET_PREVIOUS_CHATS",
-        payload: data
-    }
-}
+
 
 const getAllSubjectsHelper = (data) => {
     return {
@@ -79,6 +51,14 @@ const fetchAttendenceHelper = (data) => {
 const getMarksHelper = (data) => {
     return {
         type: "GET_MARKS",
+        payload: data
+    }
+    
+}
+
+const getPapersHelper = (data) => {
+    return {
+        type: "GET_PAPERS",
         payload: data
     }
     
@@ -132,21 +112,7 @@ export const studentUpdatePassword = (passwordData) => {
     }
 }
 
-export const chatHelper = (name) => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios({
-                method: 'Post',
-                url: url + "/api/student/getStudentByName",
-                data: name
-            })
-            dispatch(chatHelp(data.result))
-        }
-        catch (err) {
-            console.log('error in recent',err.message)
-        }
-    }
-}
+
 
 export const getStudentByRegName = (registrationNumber) => {
     return async (dispatch) => {
@@ -207,82 +173,15 @@ export const submitOTPStudent = (newPasswordWithOtp, history) => {
     }
 }
 
-export const sendMessage = (room,messageobj) => {
-    return async () => {
-        try {
-            const { data } = await axios({
-                method: 'Post',
-                url: url + `/api/student/chat/${room}`,
-                data: messageobj
-            })
-        }
-        catch (err) {
-            console.log("Error in sending message",err.message)
-        }
-    }
-}
 
 
-export const getPrivateConversation = (roomId) => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios({
-                method: 'Get',
-                url: url + `/api/student/chat/${roomId}`,
-            })
-            dispatch(privateConversation(data.result))
-        }
-        catch (err) {
-            console.log("Error in sending message", err.message)
-        }
-    }
-}
-
-export const getPrivateConversation2 = (roomId) => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios({
-                method: 'Get',
-                url: url + `/api/student/chat/${roomId}`,
-            })
-            dispatch(privateConversation2(data.result))
-        }
-        catch (err) {
-            console.log("Error in sending message", err.message)
-        }
-    }
-}
-
-export const previousChats = (senderName) => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios({
-                method: 'Get',
-                url: url + `/api/student/chat/previousChats/${senderName}`,
-            })
-            dispatch(previousChatsHelper(data.result))
-        }
-        catch (err) {
-            console.log("Error in sending message", err.message)
-        }
-    }
-}
 
 
-export const newerChats = (receiverName) => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios({
-                method: 'Get',
-                url: url + `/api/student/chat/newerChats/${receiverName}`,
-            })
-            dispatch(newerChatsHelper(data.result))
-        }
-        catch (err) {
-            console.log("Error in sending message", err.message)
-        }
-    }
-}
+
+
+
+
+
 
 export const studentUpdate = (updatedData) => {
     return async () => {
@@ -340,7 +239,23 @@ export const getMarks = () => {
            dispatch(getMarksHelper(data.result))
         }
         catch (err) {
-            console.log("Error in getting marks", err.message)
+            console.log("Error in getting Marks", err.message)
+        }
+    }
+}
+
+export const getPapers = () => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios({
+                method: 'Get',
+                url: url + "/api/student/getPapers"
+            })
+           dispatch(getMarksHelper(data.result))
+           console.log(data.result)
+        }
+        catch (err) {
+            console.log("Error in getting papers", err.message)
         }
     }
 }

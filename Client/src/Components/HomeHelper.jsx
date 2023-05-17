@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { studentLogout, newerChats, previousChats} from '../redux/action/studentAction'
+import { studentLogout} from '../redux/action/studentAction'
 
 
 const Home = () => {
@@ -14,10 +14,7 @@ const Home = () => {
         }
     }, [store.student.student.student.name])
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(newerChats(store.student.student.student.name))
-        dispatch(previousChats(store.student.student.student.name))
-    }, [store.student.newerChats.length])
+   
     const logoutHandler = () => {
         dispatch(studentLogout())
         history.push('/')
@@ -51,9 +48,10 @@ const Home = () => {
                                 <li className="nav-item" >
                                     <button type="button" className="btn"><Link to="/Servicepre"><li style={{color:"white"}}>Services</li></Link></button>
                                 </li>
-                                {/* <li className="nav-item">
-                                    <button type="button" className="btn"><Link to="/studentDetails"><li style={{color:"white"}}>NEW CONVERSATION ({store.student.newerChats.length})</li></Link></button>
-                                </li> */}
+                                <li className="nav-item" >
+                                    <button type="button" className="btn"><Link to="/student/paperuploaded"><li style={{color:"white"}}>Paper</li></Link></button>
+                                </li>
+                              
                                 <li className="nav-item">
                                     <button type="button" className="btn"><Link to="/student/updatePassword"><li style={{color:"white"}}>UPDATE PASSWORD</li></Link></button>
                                 </li>

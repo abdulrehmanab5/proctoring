@@ -74,7 +74,7 @@ const ForgotPassword = (props) => {
                                     <div className="invalid-feedback">{errors.email}</div>
                                 )}
                             </div>
-                            <button type="submit" className="btn btn-primary">Send OTP</button>
+                            <button  style={{backgroundColor:"#003b67"}} type="submit" className="btn btn-primary">Send OTP</button>
                         </form>
                     </> : <>
                             <form noValidate onSubmit={submitOTPHandler}>
@@ -105,7 +105,7 @@ const ForgotPassword = (props) => {
                                         <div className="invalid-feedback">{errors.confirmNewPassword}</div>
                                     )}
                                 </div>
-                                <button type="submit" className="btn btn-primary">Submit</button>
+                                <button  style={{backgroundColor:"#003b67"}} type="submit" className="btn btn-primary">Submit</button>
                             </form>
                         </>}
                 </div>

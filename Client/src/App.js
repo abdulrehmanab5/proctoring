@@ -31,7 +31,7 @@ import FacultyStudentLoginPags from './Pages/FacultyStudentLoginPags'
 import StudentUpdatePassword from './Pages/StudentUpdatePassword'
 import FacultyUpdatePassword from './Pages/FacultyUpdatePassword'
 import ForgotPassword from './Pages/ForgotPassword'
-import Chat from './Pages/Chat'
+
 import RecieverUserDetails from './Pages/RecieverUserDetails'
 import StudentUpdateProfile from './Pages/StudentUpdateProfile'
  
@@ -44,6 +44,8 @@ import FacultyUploadPaper from './Pages/Faculty/FacultyUploadPaper'
 import FacultyUpdateProfile from './Pages/Faculty/FacultyUpdateProfile'
 
 import StudentTestPerformace from './Pages/Student/StudentTestPerformance'
+
+import StudentPaper from './Pages/Student/StudentPaper'
 
 import AdminAddAdmin from './Pages/Admin/AdminAddAdmin'
 
@@ -120,6 +122,7 @@ function App() {
           <Route exact path="/admin/allSubject" component={AdminGetAllSubject} />
           <Route exact path="/student/attendence" component={StudentAttendencePage} />
           <Route exact path="/student/updatePassword" component={StudentUpdatePassword} />
+          <Route exact path="/student/paperuploaded" component={StudentPaper} />
           <Route exact path="/student/testPerformance" component={StudentTestPerformace} />
           <Route exact path="/faculty/updatePassword" component={FacultyUpdatePassword} />
           <Route exact path="/faculty/uploadMarks" component={FacultyUploadMarks} />
@@ -127,7 +130,7 @@ function App() {
           <Route exact path="/faculty/updateProfile" component={FacultyUpdateProfile} />
           <Route exact path="/student/getAllSubjects" component={StudentSubjectList} />
           <Route exact path="/forgotPassword/:user" component={ForgotPassword} />
-          <Route exact path="/chat/:room" component={Chat} />
+       
           <Route exact path="/student/:registrationNumber" component={RecieverUserDetails} />
         </Switch>
       </Router>
